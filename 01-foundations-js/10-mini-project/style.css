@@ -1,0 +1,12 @@
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+}
+
+.app {
+  max-width: 500px;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}

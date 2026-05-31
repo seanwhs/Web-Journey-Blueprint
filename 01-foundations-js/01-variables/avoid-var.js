@@ -1,3 +1,5 @@
+// 01-foundations-js/01-variables/avoid-var.js
+
 /**
  * Demonstrating why 'var' causes scope leaks
  * and how 'let'/'const' provide safety.

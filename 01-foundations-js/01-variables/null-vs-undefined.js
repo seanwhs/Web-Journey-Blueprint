@@ -1,3 +1,5 @@
+// 01-foundations-js/01-variables/null-vs-undefined.js
+
 /**
  * null vs undefined
  * * null: Intentional absence of any object value. 

@@ -1,6 +1,6 @@
 # 🚀 Web Journey Blueprint
 
-# From JavaScript Fundamentals to Production-Grade React & Next.js Systems
+## From JavaScript Fundamentals to Production-Grade React & Next.js Systems
 
 Welcome to the **Web Journey Blueprint**.
 
@@ -8,7 +8,7 @@ This repository is a structured engineering roadmap for mastering the modern Rea
 
 This is not a collection of disconnected tutorials.
 
-It is a progressive frontend engineering curriculum designed to help you understand:
+It is a **progressive frontend engineering curriculum** designed to help you understand:
 
 * how modern frontend systems are structured
 * how React renders and manages UI
@@ -20,7 +20,7 @@ It is a progressive frontend engineering curriculum designed to help you underst
 
 The goal is not simply to “learn React.”
 
-The goal is to build the mental models required to understand and design modern web systems.
+The goal is to build the **mental models required to understand and design modern web systems**.
 
 ---
 
@@ -28,40 +28,37 @@ The goal is to build the mental models required to understand and design modern 
 
 Modern frontend development often feels overwhelming.
 
-Beginners are typically told to learn:
+Beginners are told to learn everything at once:
 
 * JavaScript
 * CSS
 * React
 * TypeScript
-* build tooling
-* state management
 * APIs
-* databases
+* state management
 * authentication
-* testing
+* databases
 * deployment
-* performance optimization
+* performance
+* tooling
 
-—all at once.
+This creates fragmentation instead of understanding.
 
-This approach creates fragmentation instead of understanding.
+This repository takes a different approach.
 
-This repository takes a different path.
-
-Instead of treating frontend development as a checklist of unrelated technologies, this curriculum teaches **architecture progressively**.
+Instead of treating frontend development as a checklist of unrelated tools, this curriculum teaches **architecture progressively**.
 
 You will learn:
 
-1. how JavaScript powers UI behavior
-2. how React transforms state into interfaces
-3. how TypeScript improves system reliability
-4. how Next.js unifies frontend and backend systems
-5. how production applications are structured end-to-end
+1. How JavaScript powers UI behavior
+2. How React transforms state into interfaces
+3. How TypeScript improves system reliability
+4. How Next.js unifies frontend and backend systems
+5. How production applications are structured end-to-end
 
 Each module introduces only what is necessary for the next stage.
 
-This creates momentum instead of overload.
+This creates **momentum instead of overload**.
 
 ---
 
@@ -71,11 +68,9 @@ Most beginners try to learn:
 
 > “All of JavaScript before React.”
 
-That is rarely required.
+But modern React applications rely on a **small, high-impact subset** of JavaScript and TypeScript.
 
-Modern React and Next.js applications rely on a focused subset of JavaScript and TypeScript concepts.
-
-If you understand those well, you can already:
+If you understand these well, you can already:
 
 * read production React codebases
 * understand component architecture
@@ -85,7 +80,7 @@ If you understand those well, you can already:
 * build reusable UI systems
 * navigate full-stack applications
 
-This repository is optimized around that reality.
+This curriculum is optimized around that reality.
 
 Instead of breadth-first learning, we focus on:
 
@@ -113,13 +108,13 @@ Each module represents a layer in the modern frontend stack.
 | `/02-react-basics`     | React Fundamentals     | Components, JSX, props, state, hooks, rendering  |
 | `/03-typescript-intro` | TypeScript for React   | Types, interfaces, unions, typed props           |
 | `/04-nextjs-fullstack` | Next.js Architecture   | App Router, SSR, Server Components, APIs         |
-| `/05-capstone-project` | Production Capstone    | Full-stack production application                |
+| `/05-capstone-project` | Capstone Project       | Full-stack production application                |
 
 Each module builds directly on the previous one.
 
-You are not learning isolated tools.
+You are not learning tools in isolation.
 
-You are constructing a mental model of a complete frontend system.
+You are constructing a **complete mental model of frontend systems**.
 
 ---
 
@@ -127,38 +122,37 @@ You are constructing a mental model of a complete frontend system.
 
 ## Phase 1 — Language of UI (JavaScript)
 
-You begin with only the JavaScript patterns React actually uses:
+You focus only on JavaScript patterns React actually uses:
 
-* arrays
-* objects
+* arrays & objects
 * functions
 * async behavior
 * immutable updates
-* data transformations
+* data transformation
 
-These form the foundation of React thinking.
+This forms the foundation of UI thinking.
 
 ---
 
 ## Phase 2 — React Rendering Model
 
-React is a rendering engine.
+React is a rendering system.
 
-You will learn:
+You learn:
 
 * JSX
 * components
 * props
 * state
 * hooks
-* rendering cycles
 * events
+* rendering cycles
 * conditional rendering
 * composition
 
 Most importantly:
 
-You learn *why React behaves the way it does*.
+> You learn why React behaves the way it does.
 
 ---
 
@@ -166,7 +160,7 @@ You learn *why React behaves the way it does*.
 
 TypeScript turns frontend applications into predictable systems.
 
-You will learn:
+You learn:
 
 * typed props and state
 * unions and interfaces
@@ -176,30 +170,29 @@ You will learn:
 * event typing
 * refs
 
-TypeScript becomes part of system design—not just tooling.
+TypeScript becomes part of **system design**, not just tooling.
 
 ---
 
 ## Phase 4 — Full-Stack Architecture (Next.js)
 
-Next.js introduces:
+Next.js extends React into a full-stack system:
 
 * routing
-* server rendering
 * Server Components
 * API routes
+* SSR & streaming
 * caching
 * data fetching
-* SEO
-* deployment patterns
+* metadata & SEO
 
-You shift from “UI thinking” to “system thinking.”
+You shift from UI thinking to **system thinking**.
 
 ---
 
 ## Phase 5 — Production Systems
 
-You will build:
+You build:
 
 * reusable UI systems
 * full-stack applications
@@ -213,7 +206,7 @@ The focus is real-world readiness.
 
 # ⚡ JavaScript React Actually Uses
 
-React relies on a small, powerful subset of JavaScript:
+React relies on a focused subset of JavaScript:
 
 * ES Modules (`import` / `export`)
 * destructuring + spread
@@ -234,12 +227,12 @@ Mastering these unlocks most production React codebases.
 TypeScript provides:
 
 * system validation
-* documentation through types
 * safer refactoring
 * better tooling
+* self-documenting code
 * reduced runtime errors
 
-In large applications, TypeScript becomes structural—not optional.
+In large systems, TypeScript becomes **structural**, not optional.
 
 Core concepts:
 
@@ -255,13 +248,13 @@ Core concepts:
 
 # ▲ Next.js as a Full-Stack System
 
-Next.js extends React into a platform:
+Next.js extends React into a unified platform:
 
 * App Router
 * Server Components
 * Route Handlers
 * SSR & streaming
-* metadata APIs
+* metadata API
 * backend integration
 
 Frontend and backend converge into one system.
@@ -270,7 +263,7 @@ Frontend and backend converge into one system.
 
 # 🧭 Engineering Principles
 
-Throughout the repository you will practice:
+Throughout the repository, you will practice:
 
 ## 1. Component Thinking
 
@@ -278,7 +271,7 @@ Break UI into reusable units.
 
 ## 2. State Thinking
 
-Understand data flow.
+Understand data flow across systems.
 
 ## 3. Immutable Updates
 
@@ -294,11 +287,11 @@ Use DevTools, logs, and type errors effectively.
 
 ## 6. Incremental Refactoring
 
-Improve systems gradually.
+Improve systems step by step.
 
 ## 7. Production Readiness
 
-Write maintainable code—not just tutorial code.
+Write maintainable code, not tutorial code.
 
 ---
 
@@ -386,8 +379,7 @@ cd web-journey-blueprint
 git init
 ```
 
-Install Node.js: https://nodejs.org
-
+Install Node.js: [https://nodejs.org](https://nodejs.org)
 Verify:
 
 ```bash
@@ -484,7 +476,9 @@ web-journey-blueprint/
 └── 05-capstone-project/
 ```
 
-## Root Config
+---
+
+## Root Config (Monorepo Style)
 
 ```json
 {
@@ -504,6 +498,8 @@ web-journey-blueprint/
 }
 ```
 
+---
+
 ## TypeScript Config
 
 ```json
@@ -520,6 +516,8 @@ web-journey-blueprint/
 }
 ```
 
+---
+
 ## Git Ignore
 
 ```
@@ -531,50 +529,60 @@ dist
 coverage
 .DS_Store
 ```
+
 ---
-🚀 Suggested Enhancements
 
-After students complete the baseline curriculum, extend the repository with:
+# 🚀 Suggested Enhancements
 
-Advanced React
-custom hooks
-context API
-reducers
-memoization
-performance optimization
-React Query
-Zustand
-Advanced TypeScript
-discriminated unions
-generic components
-advanced utility types
-schema validation with Zod
-Advanced Next.js
-authentication
-caching
-streaming
-optimistic updates
-edge runtime
-middleware
-deployment pipelines
-Dev Tooling
-ESLint
-Prettier
-Husky
-Vitest
-Playwright
-GitHub Actions
-Docker
-🎯 Final Curriculum Outcome
+After completing the core curriculum, extend into:
 
-By the end of this repository, students should understand:
+## Advanced React
 
-modern JavaScript architecture
-React rendering systems
-component composition
-immutable state management
-TypeScript safety patterns
-full-stack Next.js architecture
-server/client rendering boundaries
-production-ready application structure
-deployment-oriented engineering workflows
+* custom hooks
+* context API
+* reducers
+* memoization
+* React Query
+* Zustand
+
+## Advanced TypeScript
+
+* discriminated unions
+* generic components
+* advanced utility types
+* schema validation (Zod)
+
+## Advanced Next.js
+
+* authentication
+* caching strategies
+* streaming
+* optimistic UI
+* middleware
+* edge runtime
+* deployment pipelines
+
+## Dev Tooling
+
+* ESLint
+* Prettier
+* Vitest
+* Playwright
+* GitHub Actions
+* Docker
+
+---
+
+# 🎯 Final Curriculum Outcome
+
+By the end of this repository, you should understand:
+
+* modern JavaScript architecture
+* React rendering systems
+* component composition
+* immutable state management
+* TypeScript safety patterns
+* full-stack Next.js architecture
+* server/client boundaries
+* production application structure
+* deployment-oriented engineering workflows

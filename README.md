@@ -531,3 +531,50 @@ dist
 coverage
 .DS_Store
 ```
+---
+🚀 Suggested Enhancements
+
+After students complete the baseline curriculum, extend the repository with:
+
+Advanced React
+custom hooks
+context API
+reducers
+memoization
+performance optimization
+React Query
+Zustand
+Advanced TypeScript
+discriminated unions
+generic components
+advanced utility types
+schema validation with Zod
+Advanced Next.js
+authentication
+caching
+streaming
+optimistic updates
+edge runtime
+middleware
+deployment pipelines
+Dev Tooling
+ESLint
+Prettier
+Husky
+Vitest
+Playwright
+GitHub Actions
+Docker
+🎯 Final Curriculum Outcome
+
+By the end of this repository, students should understand:
+
+modern JavaScript architecture
+React rendering systems
+component composition
+immutable state management
+TypeScript safety patterns
+full-stack Next.js architecture
+server/client rendering boundaries
+production-ready application structure
+deployment-oriented engineering workflows

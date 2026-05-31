@@ -1,3 +1,5 @@
+// 01-foundations-js/01-variables/variables.js
+
 // Declare a constant for the course name, as it should not be reassigned
 const courseName = 'Web Journey Blueprint'; 
 

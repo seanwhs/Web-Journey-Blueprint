@@ -4,28 +4,32 @@
 
 Welcome to the final module of the **Web Journey Blueprint**.
 
-This is where everything you’ve learned stops being isolated exercises and becomes a **complete production-style application**.
+This is where isolated concepts collapse into a single outcome:
 
-You are no longer learning syntax.
+> a **real, database-backed, full-stack Next.js application**
 
-You are building a system.
+You are no longer practicing syntax.
+
+You are building a system with persistence, server logic, and UI composition.
 
 ---
 
 # 🧠 What This Module Really Is
 
-This capstone is not “one more tutorial project.”
+This capstone is not a tutorial project.
 
-It is a **compression of real-world frontend architecture** into a guided build.
+It is a **compressed version of real production architecture**, simplified for learning.
 
-You will combine:
+You are working with:
 
-* JavaScript fundamentals
-* React component architecture
-* TypeScript safety
-* Next.js full-stack patterns
+* Next.js App Router
+* Server Components
+* Server Actions
+* Prisma ORM
+* SQLite database
+* React UI components
 
-into a single cohesive application.
+Together, these form a real full-stack system.
 
 ---
 
@@ -33,14 +37,14 @@ into a single cohesive application.
 
 Build a:
 
-> **Production-Style Full-Stack Task Management System**
+> **Production-Style Task Management System (Full-Stack)**
 
-Think of it as a simplified version of:
+This is structurally similar to:
 
-* Notion (structure)
-* Trello (tasks)
-* Linear (workflow concepts)
-* internal admin dashboards (real-world pattern)
+* Trello (task workflow)
+* Linear (task state model)
+* Notion (structured content system)
+* Internal admin dashboards (CRUD-heavy systems)
 
 ---
 
@@ -48,499 +52,445 @@ Think of it as a simplified version of:
 
 By the end of this module, you should be able to:
 
-* design a React component system from scratch
-* structure a Next.js full-stack application
-* model real-world data using TypeScript
-* separate server/client responsibilities correctly
-* build API routes and server actions
-* handle async data flows cleanly
-* deploy a working application confidently
+* design full-stack Next.js applications using the App Router
+* model real data using Prisma + TypeScript
+* build server actions for mutations
+* fetch data in Server Components
+* separate UI vs server responsibilities cleanly
+* implement CRUD flows (create + read at minimum here)
+* understand database-driven UI rendering
 
 ---
 
 # 🏗️ System Architecture Overview
 
-This is what you're building:
+This is the actual system you are building:
 
-```text id="capstone-architecture"
-User Interaction (Browser)
+```text
+Browser (User Interaction)
         ↓
-Client Components (React UI)
+Server Components (DashboardPage)
         ↓
-Server Actions / API Routes
+Prisma Client (Database Query Layer)
         ↓
-Server Components (Rendering Layer)
+SQLite Database (Persistent Storage)
         ↓
-Data Layer (In-memory / DB / Mock API)
+Server Actions (Mutations via forms)
+        ↓
+UI Components (TaskCard / TaskForm)
 ```
 
 ---
 
-# 📦 Suggested Project Structure
+# 📦 Project Structure (Real Implementation)
 
-```text id="capstone-structure"
-05-capstone-project/
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   ├── dashboard/
-│   │   ├── page.tsx
-│   │   ├── loading.tsx
-│   │   └── error.tsx
-│   ├── tasks/
-│   │   ├── page.tsx
-│   │   └── [id]/page.tsx
-│   └── api/
-│       └── tasks/route.ts
-│
+This matches your current codebase:
+
+```text
+app/
+├── dashboard/
+│   └── page.tsx
 ├── components/
 │   ├── TaskCard.tsx
 │   ├── TaskForm.tsx
-│   ├── TaskList.tsx
-│   ├── Button.tsx
-│   └── Layout.tsx
-│
+│   └── Navbar.tsx
 ├── lib/
-│   ├── tasks.ts
-│   ├── db.ts (mock or real)
-│   └── utils.ts
-│
+│   ├── actions.ts
+│   └── prisma.ts
 ├── types/
 │   └── task.ts
-│
-└── server/
-    └── actions.ts
+└── prisma/
+    └── schema.prisma
 ```
 
 ---
 
 # 🧠 Core Data Model
 
-Everything revolves around one concept:
+Everything revolves around one entity:
 
-> A Task
+> Task
 
 ---
 
-## Task Type (Foundation)
+## Prisma Schema (Source of Truth)
 
-```ts id="task-type"
-export type TaskStatus = "todo" | "in-progress" | "done";
-
-export type Task = {
-  id: string;
-  title: string;
-  description?: string;
-  status: TaskStatus;
-  createdAt: string;
-};
+```prisma
+model Task {
+  id        Int      @id @default(autoincrement())
+  title     String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
 ```
 
 ---
 
-# Why This Matters
+## TypeScript Representation
 
-This single model teaches:
+```ts
+export type Task = {
+  id: number;
+  title: string;
+  completed: boolean;
+  createdAt: string;
+};
+```
 
-* union types (`TaskStatus`)
-* optional fields
-* structured data modeling
-* real-world API shape thinking
+### Important Insight
+
+You are bridging:
+
+> Database types (Prisma) → UI types (TypeScript)
+
+This is real-world backend/frontend alignment.
 
 ---
 
 # ⚛️ UI SYSTEM DESIGN
 
-You are building a component system, not just pages.
+You are not building pages.
+
+You are building **a component system over a data model**.
 
 ---
 
-## 1. TaskCard Component
+## 1. Dashboard Page (Server Component)
 
-Represents a single task.
+```tsx
+import { prisma } from '../../lib/prisma';
+import TaskCard from '../../components/TaskCard';
+import TaskForm from '../../components/TaskForm';
 
-```tsx id="task-card"
-import { Task } from "@/types/task";
+export default async function DashboardPage() {
+  const tasks = await prisma.task.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
 
-type Props = {
+  return (
+    <main>
+      <h1>Dashboard</h1>
+
+      <TaskForm />
+
+      <section>
+        {tasks.map(task => (
+          <TaskCard
+            key={task.id}
+            task={{
+              ...task,
+              createdAt: task.createdAt.toISOString()
+            }}
+          />
+        ))}
+      </section>
+    </main>
+  );
+}
+```
+
+### What this teaches
+
+* Server-side data fetching
+* Database-driven rendering
+* No client state required for initial load
+* Data hydration into UI components
+
+---
+
+## 2. TaskCard (Pure UI Component)
+
+```tsx
+import { Task } from '../types/task';
+
+type TaskCardProps = {
   task: Task;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
 };
 
-export const TaskCard = ({ task, onToggle, onDelete }: Props) => {
+export default function TaskCard({ task }: TaskCardProps) {
   return (
-    <div className="card">
+    <article>
       <h3>{task.title}</h3>
-      <p>{task.description}</p>
 
-      <p>Status: {task.status}</p>
-
-      <button onClick={() => onToggle(task.id)}>
-        Toggle
-      </button>
-
-      <button onClick={() => onDelete(task.id)}>
-        Delete
-      </button>
-    </div>
+      <p>
+        Status:{' '}
+        {task.completed ? 'Completed' : 'Pending'}
+      </p>
+    </article>
   );
-};
+}
 ```
+
+### Key Idea
+
+This is a **pure presentation component**:
+
+> input → render output
+
+No state. No fetching. No side effects.
 
 ---
 
-## 2. TaskList Component
+## 3. TaskForm (Server Action Form)
 
-```tsx id="task-list"
-import { Task } from "@/types/task";
-import { TaskCard } from "./TaskCard";
+```tsx
+import { createTask } from '../lib/actions';
 
-type Props = {
-  tasks: Task[];
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-};
-
-export const TaskList = ({
-  tasks,
-  onToggle,
-  onDelete
-}: Props) => {
+export default function TaskForm() {
   return (
-    <div>
-      {tasks.map(task => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
-      ))}
-    </div>
-  );
-};
-```
-
----
-
-## 3. TaskForm Component
-
-```tsx id="task-form"
-"use client";
-
-import { useState } from "react";
-
-type Props = {
-  onCreate: (title: string) => void;
-};
-
-export const TaskForm = ({ onCreate }: Props) => {
-  const [title, setTitle] = useState("");
-
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onCreate(title);
-        setTitle("");
-      }}
-    >
+    <form action={createTask}>
       <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="New task"
+        name="title"
+        placeholder="Enter task"
       />
 
-      <button type="submit">Add</button>
+      <button type="submit">
+        Create Task
+      </button>
     </form>
   );
+}
+```
+
+### Key Idea
+
+This uses:
+
+> Server Actions instead of API routes
+
+Form submission directly triggers server mutation.
+
+---
+
+## 4. Server Action (Mutation Layer)
+
+```ts
+'use server';
+
+import { prisma } from './prisma';
+
+export async function createTask(formData: FormData) {
+  const title = formData.get('title') as string;
+
+  await prisma.task.create({
+    data: { title }
+  });
+}
+```
+
+### What this teaches
+
+* server-side mutations
+* direct database writes
+* no REST boilerplate
+* tight UI → server integration
+
+---
+
+## 5. Prisma Client (Database Layer)
+
+```ts
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
-```
 
----
+export const prisma =
+  globalForPrisma.prisma ?? new PrismaClient();
 
-# 🔌 Server Layer (Next.js Power Core)
-
----
-
-## Server Action (Create Task)
-
-```ts id="server-action-create"
-"use server";
-
-import { Task } from "@/types/task";
-
-let tasks: Task[] = [];
-
-export async function createTask(title: string) {
-  const newTask: Task = {
-    id: crypto.randomUUID(),
-    title,
-    status: "todo",
-    createdAt: new Date().toISOString()
-  };
-
-  tasks.push(newTask);
-
-  return newTask;
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
 }
 ```
 
----
+### Why this matters
 
-## Why This Matters
+This ensures:
 
-You are now working with:
-
-* server state
-* in-memory persistence (upgradeable to DB)
-* mutation logic outside UI
+* singleton Prisma instance
+* no connection explosion in dev
+* production-safe database access layer
 
 ---
 
-# 🌐 API Route Layer
+## 6. Navbar (Routing Layer)
 
----
+```tsx
+import Link from 'next/link';
 
-```ts id="api-route"
-import { NextRequest } from "next/server";
-
-export async function GET() {
-  return Response.json({ message: "tasks API" });
-}
-
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  return Response.json({ received: body });
-}
-```
-
----
-
-# 🧠 Page Composition (Server Component)
-
----
-
-```tsx id="page"
-import { TaskList } from "@/components/TaskList";
-import { TaskForm } from "@/components/TaskForm";
-import { createTask } from "@/server/actions";
-
-export default async function Page() {
-  const tasks = []; // replace with DB or server state
-
+export default function Navbar() {
   return (
-    <div>
-      <h1>Task Dashboard</h1>
-
-      <TaskForm onCreate={createTask} />
-
-      <TaskList
-        tasks={tasks}
-        onToggle={() => {}}
-        onDelete={() => {}}
-      />
-    </div>
+    <nav>
+      <Link href="/">Home</Link>
+      <Link href="/dashboard">Dashboard</Link>
+    </nav>
   );
 }
 ```
+
+### Key Idea
+
+Navigation is part of system architecture:
+
+> UI + routing = application structure
 
 ---
 
 # 🧠 What You Are Practicing Here
 
-This is the real learning outcome:
+This capstone is training you to think in layers:
 
-### You are separating concerns:
-
-| Layer             | Responsibility  |
-| ----------------- | --------------- |
-| UI Components     | Rendering       |
-| Client Components | Interactivity   |
-| Server Actions    | Mutations       |
-| API Routes        | External access |
-| Types             | Structure       |
-| Pages             | Composition     |
+| Layer          | Responsibility        |
+| -------------- | --------------------- |
+| Prisma         | Data persistence      |
+| Server Actions | Mutations             |
+| Server Pages   | Data fetching         |
+| Components     | UI rendering          |
+| Types          | Data contracts        |
+| Next.js Router | Application structure |
 
 ---
 
-# ⚙️ Feature Requirements (Capstone Scope)
-
----
+# ⚙️ Feature Requirements
 
 ## Core Features
 
-### 1. Task Management
+### 1. Task Creation
 
-* create task
+* via server action form
+
+### 2. Task Listing
+
+* fetched from database
+* server-rendered
+
+### 3. Task Status Display
+
+* completed vs pending
+
+---
+
+## Missing (Intentional for Learning)
+
+This version intentionally does NOT include:
+
+* delete
+* update/toggle
+* client state management
+
+These are natural extensions.
+
+---
+
+# 🚀 Stretch Extensions
+
+Once stable, extend the system:
+
+## 1. Full CRUD
+
+* update task
 * delete task
-* toggle status
+* toggle completion
 
----
+## 2. Client Interactions
 
-### 2. Filtering System
+* optimistic UI updates
+* loading states
 
-* all tasks
-* todo
-* in-progress
-* done
+## 3. Filtering
 
----
+* completed / pending filters
 
-### 3. UI States
+## 4. Database Upgrade
 
-* loading
-* empty state
-* error state
-
----
-
-### 4. Component System
-
-* reusable TaskCard
-* reusable Button
-* reusable Form
-
----
-
-### 5. Server Integration
-
-Choose one:
-
-* in-memory store (beginner)
-* JSON file persistence
-* database (advanced stretch)
-
----
-
-# 🚀 Stretch Goals (Optional)
-
-If you want to push further:
-
----
-
-## 1. Authentication Layer
-
-* simple login mock
-* user-specific tasks
-
----
-
-## 2. Persistence Upgrade
-
-* Prisma + SQLite
+* Postgres via Prisma
 * or Supabase
 
----
+## 5. Auth Layer
 
-## 3. Optimistic UI
-
-* instant UI updates before server confirmation
+* per-user tasks
 
 ---
 
-## 4. Advanced Filtering
+# ⚠️ Common Mistakes
 
-* search tasks
-* date filtering
+## ❌ Mixing concerns
 
----
+Do NOT:
 
-## 5. UI Polish
-
-* animations
-* transitions
-* loading skeletons
+* fetch inside components randomly
+* mix Prisma calls in UI components
+* convert everything into client components
 
 ---
 
-# ⚠️ Common Capstone Mistakes
+## ❌ Overusing `"use client"`
+
+Only use client components for:
+
+* interactivity
+* form state
+* event handling beyond forms
 
 ---
 
-## Mixing Everything Together
+## ❌ Treating this as a CRUD tutorial
 
-❌ UI + server logic + state all in one file
+This is not CRUD practice.
 
----
+It is:
 
-## Correct Approach
-
-Separate:
-
-* components/
-* server/
-* lib/
-* types/
-
----
-
-## Overusing Client Components
-
-Only use `"use client"` when needed.
-
----
-
-## Ignoring Types
-
-Capstone is where TypeScript becomes critical.
+> architecture training
 
 ---
 
 # 🧠 Final Mental Model
 
-At this stage, you should think like this:
+At this point:
 
-> React = UI system
-> TypeScript = structure system
-> Next.js = full-stack orchestration system
+> React = UI layer
+> Next.js = orchestration layer
+> Prisma = data layer
+> Server Actions = mutation layer
 
-Together:
-
-> You are building software systems, not pages
+You are assembling a real system.
 
 ---
 
 # 🧪 Final Challenge
 
-Before finishing the course, you should be able to:
+You should be able to:
 
-* rebuild this project from scratch
-* explain every folder’s purpose
-* separate client/server logic correctly
-* design a new feature without breaking architecture
+* explain every file in this project
+* rebuild it from scratch without copying
+* add missing CRUD features
+* introduce new features without breaking structure
 
 ---
 
 # 🎓 Completion Outcome
 
-If you complete this capstone properly, you are no longer:
+After completing this module:
 
-> “learning React”
+You are no longer:
+
+> “learning Next.js”
 
 You are:
 
-> building production-grade frontend systems
+> building database-backed full-stack systems
 
 ---
 
-# 🚀 What’s Next
+# 🚀 Next Step
 
-From here, you move into real-world engineering:
+You move from:
 
-* system design
-* performance optimization
-* architecture patterns
-* scaling frontend applications
-* integrating real databases and auth systems
+> guided system building
 
----
+to:
 
-# 🏁 Final Note
+> independent system design
 
-The goal was never to memorize syntax.
-
-The goal was to build intuition for systems.
-
-If you can build this capstone without confusion, you are already operating at a real-world frontend engineering level.
+This is where real engineering starts.

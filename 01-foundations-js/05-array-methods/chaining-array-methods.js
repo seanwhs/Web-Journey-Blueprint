@@ -13,14 +13,18 @@ const products = [
   { id: 3, name: 'Monitor', price: 450 }
 ];
 
+// Example A: Standard Pipeline
 const expensiveTotal = products
-  // 1. Filter: Keep only items > 100
   .filter(product => product.price > 100)
-  
-  // 2. Map: Extract just the prices
   .map(product => product.price)
-  
-  // 3. Reduce: Sum the prices
   .reduce((sum, price) => sum + price, 0);
 
+// Example B: Using .find()
+// Note: .find() returns an object, so we cannot chain .map() after it.
+// It acts as a "terminal" method in this chain.
+const expensiveKeyboard = products
+  .filter(product => product.price > 100)
+  .find(product => product.name === 'Keyboard');
+
 console.log('Total of expensive items:', expensiveTotal); // 570
+console.log('Found expensive item:', expensiveKeyboard);  // { id: 1, name: 'Keyboard', price: 120 }

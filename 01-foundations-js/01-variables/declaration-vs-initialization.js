@@ -1,3 +1,5 @@
+// 01-foundations-js/01-variables/declaration-vs-initialization.js
+
 // --- 1. 'var': Function-scoped, can be redeclared ---
 var status; // Declaration
 status = "active"; // Initialization

@@ -1,0 +1,15 @@
+{
+  "name": "web-journey-blueprint",
+  "private": true,
+  "workspaces": [
+    "01-foundations-js",
+    "02-react-basics",
+    "03-typescript-intro",
+    "04-nextjs-fullstack",
+    "05-capstone-project"
+  ],
+  "scripts": {
+    "dev": "echo \"Run individual module scripts\"",
+    "lint": "echo \"Add linting later\""
+  }
+}

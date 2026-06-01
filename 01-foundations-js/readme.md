@@ -6,7 +6,7 @@ Welcome to the **Web Journey Blueprint**. This module is designed to master the 
 
 ## 🧠 Why This Module Matters
 
-React is not magic; it is built on functional programming, array transformations, and immutable state updates. If JavaScript feels natural, React feels intuitive.
+React is built on functional programming, array transformations, and immutable state updates. If JavaScript feels natural, React feels intuitive.
 
 ### 🎯 Learning Objectives
 
@@ -20,73 +20,81 @@ React is not magic; it is built on functional programming, array transformations
 
 ## ⚡ Core JavaScript Patterns & Comparisons
 
-### 1. Variables: `const` vs `let` vs `var`
+### 1. Asynchronous Data: Promises vs. `async/await`
 
-| Feature | `const` | `let` | `var` |
-| --- | --- | --- | --- |
-| **Reassignable** | No | Yes | Yes |
-| **Scope** | Block | Block | Function |
-| **Usage** | Default | When changing | Avoid |
+| Feature | Promises (`.then`) | `async/await` |
+| --- | --- | --- |
+| **Readability** | Chained (Callback Hell) | Linear (Synchronous style) |
+| **Error Handling** | `.catch()` | `try / catch` |
+| **Debugging** | Harder to trace | Easy (standard stepping) |
 
-### 2. Iteration: Loops
-
-React avoids traditional loops in JSX, but they remain essential for logic-heavy JavaScript.
-
-**`while` Loop (Check condition first):**
+**Comparison:**
 
 ```javascript
-let count = 0;
-const MAX_COUNT = 3;
+// 1. The Promise Way
+fetch('/api/user')
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
 
-// The condition is checked at the start.
-while (count < MAX_COUNT) {
-  console.log(`Current iteration: ${count + 1}`);
-  count++;
-}
-
-```
-
-**`do...while` Loop (Execute then check condition):**
-
-```javascript
-let count = 5;
-
-// Ensures code runs at least once, even if condition is false.
-do {
-  console.log(`Execution guaranteed. Current count: ${count}`);
-  count++;
-} while (count < 3);
-
-```
-
-### 3. Logic: Ternary vs. `if/else`
-
-Use Ternaries inside JSX because they return a value.
-
-```javascript
-const isLoggedIn = true;
-
-// Ternary (Expression - works in JSX)
-const status = isLoggedIn ? 'Active' : 'Offline';
-
-```
-
-### 4. Asynchronous Data: Promises vs. `async/await`
-
-`async/await` is "syntactic sugar" built on top of Promises.
-
-**The Async/Await Way (Linear flow):**
-
-```javascript
-const getUserData = async () => {
+// 2. The Async/Await Way (Cleaner)
+const fetchData = async () => {
   try {
-    const userRes = await fetch('/api/user');
-    const user = await userRes.json();
-    console.log(user);
-  } catch (error) {
-    console.error('Error:', error);
+    const res = await fetch('/api/user');
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error(err);
   }
 };
+
+```
+
+---
+
+### 2. Module Systems
+
+| System | Synchronous/Async | Primary Use Case |
+| --- | --- | --- |
+| **ESM** | Async (Static) | Modern React / Next.js |
+| **CommonJS** | Sync | Legacy Node.js |
+
+**Comparison:**
+
+```javascript
+// ESM (Standard)
+import { add } from './math.js';
+export const subtract = (a, b) => a - b;
+
+// CommonJS (Legacy)
+const { add } = require('./math.js');
+module.exports = { subtract };
+
+```
+
+---
+
+### 3. Iteration: `for` vs `while` vs `do...while`
+
+| Loop | Use Case |
+| --- | --- |
+| **`for`** | When you know the exact number of iterations. |
+| **`while`** | When iterations depend on a dynamic condition. |
+| **`do...while`** | When you must execute the code **at least once**. |
+
+**Loop Comparison Snippets:**
+
+```javascript
+// FOR: Best for arrays
+for (let i = 0; i < 3; i++) { console.log(i); }
+
+// WHILE: Check condition FIRST
+let j = 0;
+while (j < 3) { console.log(j); j++; }
+
+// DO...WHILE: Run at least once
+let k = 5;
+do { console.log('Executed!'); } while (k < 3);
 
 ```
 
@@ -100,10 +108,6 @@ const getUserData = async () => {
 | **Conditionals** | Ternary `? :` / `&&` | `if...else` statements |
 | **Updates** | Spread `...` | `array.push()` / `obj.key = val` |
 
----
-
-## 🛠️ Quick-Start Practice
-
 **Practice Challenge:**
 
 ```javascript
@@ -112,6 +116,8 @@ const rawData = [0, 1, 2];
 const newList = // ... your code here
 
 ```
+
+---
 
 ## ✅ Module Completion Checklist
 

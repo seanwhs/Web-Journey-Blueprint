@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div id="profile-container"></div>
+
+  <style>
+    /* Basic styling for our dynamically created card */
+    .card { border: 1px solid #ccc; padding: 15px; border-radius: 8px; font-family: sans-serif; }
+    .status { font-weight: bold; color: blue; }
+  </style>
+
+  <script>
+    const user = { name: 'Sean', role: 'Developer' };
+    const age = 25;
+
+    // We use template literals to construct a string of HTML
+    const template = `
+      <div class="card">
+        <h2>${user.name.toUpperCase()}</h2>
+        <p>Role: ${user.role}</p>
+        <p>Status: <span class="status">${age >= 18 ? 'Adult' : 'Minor'}</span></p>
+      </div>
+    `;
+
+    // Inject the string into the DOM
+    document.getElementById('profile-container').innerHTML = template;
+  </script>
+</body>
+</html>

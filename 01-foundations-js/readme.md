@@ -18,190 +18,100 @@ React is not magic; it is built on functional programming, array transformations
 
 ---
 
-## ⚡ Core JavaScript Patterns
+## ⚡ Core JavaScript Patterns & Comparisons
 
-### 1. Variables & Scope
+### 1. Variables: `const` vs `let` vs `var`
 
-Use `const` by default to prevent accidental reassignment. Only use `let` when a value must change. **Avoid `var**` to prevent scope leaking.
+| Feature | `const` | `let` | `var` |
+| --- | --- | --- | --- |
+| **Reassignable** | No | Yes | Yes |
+| **Scope** | Block | Block | Function |
+| **Usage** | Default | When changing | Avoid |
 
-### 2. Immutability
+### 2. Iteration: Loops
 
-React state must not be mutated directly. Use the spread operator (`...`) to create updated copies.
+React avoids traditional loops in JSX, but they remain essential for logic-heavy JavaScript.
 
-### 3. Array Methods
-
-React renders lists by transforming arrays into UI components.
-
-* **`map()`**: Transform data into JSX.
-* **`filter()`**: Conditionally render lists.
-* **`reduce()`**: Calculate totals or derive state.
-
-### 4. Asynchronous Data
-
-Modern applications fetch data constantly. `async/await` allows asynchronous operations to read like synchronous, linear code.
+**`while` Loop (Check condition first):**
 
 ```javascript
-const getUser = async (id) => {
-  const res = await fetch(`/api/users/${id}`);
-  const user = await res.json();
-  // Nullish Coalescing fallback
-  return user ?? { name: 'Guest' }; 
-};
+let count = 0;
+const MAX_COUNT = 3;
+
+// The condition is checked at the start.
+while (count < MAX_COUNT) {
+  console.log(`Current iteration: ${count + 1}`);
+  count++;
+}
 
 ```
 
----
-
-## 🧱 Mini Project: Task Manager
-
-Build a Task Manager to mirror core React patterns:
-
-**The Immutable Toggle Pattern:**
+**`do...while` Loop (Execute then check condition):**
 
 ```javascript
-const toggleTask = (id) => {
-  tasks = tasks.map(task => 
-    task.id === id ? { ...task, completed: !task.completed } : task
-  );
-};
+let count = 5;
+
+// Ensures code runs at least once, even if condition is false.
+do {
+  console.log(`Execution guaranteed. Current count: ${count}`);
+  count++;
+} while (count < 3);
 
 ```
 
----
+### 3. Logic: Ternary vs. `if/else`
 
-## 🚀 Promises vs. Async/Await
-
-**The Promise Way (Chaining):**
+Use Ternaries inside JSX because they return a value.
 
 ```javascript
-const getProduct = () => {
-  fetch('/api/product/1')
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-};
+const isLoggedIn = true;
+
+// Ternary (Expression - works in JSX)
+const status = isLoggedIn ? 'Active' : 'Offline';
 
 ```
 
-**The Async/Await Way (Linear):**
+### 4. Asynchronous Data: Promises vs. `async/await`
+
+`async/await` is "syntactic sugar" built on top of Promises.
+
+**The Async/Await Way (Linear flow):**
 
 ```javascript
-const getProduct = async () => {
+const getUserData = async () => {
   try {
-    const response = await fetch('/api/product/1');
-    const data = await response.json();
-    console.log(data);
+    const userRes = await fetch('/api/user');
+    const user = await userRes.json();
+    console.log(user);
   } catch (error) {
-    console.error(error);
+    console.error('Error:', error);
   }
 };
 
 ```
 
-**Pro-Tip: Managing Multiple Requests (Parallel):**
+---
 
-```javascript
-const loadDashboard = async () => {
-  const [userRes, tasksRes] = await Promise.all([
-    fetch('/api/user'),
-    fetch('/api/tasks')
-  ]);
-  const user = await userRes.json();
-  const tasks = await tasksRes.json();
-  console.log(user, tasks);
-};
+## 🚀 React-Ready Patterns
 
-```
+| Pattern | React-Preferred | Avoid in React |
+| --- | --- | --- |
+| **Iteration** | `.map()` | `for` / `while` loops |
+| **Conditionals** | Ternary `? :` / `&&` | `if...else` statements |
+| **Updates** | Spread `...` | `array.push()` / `obj.key = val` |
 
 ---
 
-## 🏗️ Module Architecture: Module Systems
+## 🛠️ Quick-Start Practice
 
-### ES Modules (Modern Standard)
-
-```javascript
-// Export
-export const add = (a, b) => a + b;
-// Import
-import { add } from './math.js';
-
-```
-
-### CommonJS (Legacy Standard)
+**Practice Challenge:**
 
 ```javascript
-// Export
-const add = (a, b) => a + b;
-module.exports = { add };
-// Import
-const { add } = require('./math.js');
+// Refactor this for-loop into a React-preferred .map():
+const rawData = [0, 1, 2];
+const newList = // ... your code here
 
 ```
-
-### AMD (Asynchronous Module Definition)
-
-```javascript
-define(['./math'], function(math) {
-  console.log(math.add(5, 3));
-});
-
-```
-
-### UMD (Universal Module Definition)
-
-```javascript
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['exports'], factory);
-    } else if (typeof exports === 'object') {
-        factory(exports);
-    } else {
-        factory((root.math = {}));
-    }
-}(this, function (exports) {
-    exports.add = function(a, b) { return a + b; };
-}));
-
-```
-
----
-
-## 🛠️ Quick-Start Practice Snippets
-
-**1. Transforming Data (map):**
-
-```javascript
-const fruits = ['Apple', 'Banana', 'Mango'];
-const listItems = fruits.map(f => `<li>${f}</li>`);
-// Output: ["<li>Apple</li>", "<li>Banana</li>", "<li>Mango</li>"]
-
-```
-
-**2. Immutable Updates (The "Spread" Trick):**
-
-```javascript
-const original = [1, 2, 3];
-const updated = [...original, 4]; // [1, 2, 3, 4]
-
-```
-
-**3. Destructuring Props:**
-
-```javascript
-const user = { name: 'Sean', age: 25 };
-const { name } = user; // 'Sean'
-
-```
-
-**4. Ternary UI Logic:**
-
-```javascript
-const isLoggedIn = true;
-const text = isLoggedIn ? 'Logout' : 'Login';
-
-```
-
----
 
 ## ✅ Module Completion Checklist
 
